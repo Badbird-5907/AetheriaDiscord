@@ -1,13 +1,13 @@
-import discord
-from os import path, listdir    # Used to check config location + listdir for auto cog loading
-import datetime # Used for logging
-from discord.ext import commands, tasks
-from configparser import ConfigParser   # Used for updating and creating config
-import random
 import asyncio
+import datetime  # Used for logging
 import logging
+import random
+from configparser import ConfigParser  # Used for updating and creating config
+from os import listdir  # Used to check config location + listdir for auto cog loading
+
 import coloredlogs
-import json
+import discord
+from discord.ext import commands
 
 client = discord.Client()
 with open('token.txt', 'r') as file:
@@ -17,8 +17,8 @@ FOOTER =  "Aetheria Online Bot | Coded By <@456951144166457345>"
 # Colours for embeds
 THUMBNAIL = "https://cdn.discordapp.com/attachments/722091896931090575/759794463307726848/9c2a9f40100d08147c6b6fb8166a4799.png"
 INFO = 0x13cd5d
-WARN = 0x8959fb
-ERROR = 0x2a0e7b
+WARN = 0xFFB100
+ERROR = 0xFF2D00
 
 logger = logging.getLogger(__name__)
 fmt = ("%(asctime)s - %(message)s")
