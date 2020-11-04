@@ -5,3 +5,4 @@ logs\
 logs\main.log
 logs/main.log
 *.log
+*.pyc
