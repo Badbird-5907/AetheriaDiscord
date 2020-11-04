@@ -70,7 +70,6 @@ async def load(ctx, extension):
     embed.set_author(name=client.user.name, icon_url=client.user.avatar_url)
     embed.set_footer(text=FOOTER)
     await ctx.send(embed=embed)
-#TODO here
 
 @load.error
 async def load_error(self, ctx, error):
