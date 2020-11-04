@@ -39,14 +39,10 @@ class INFORMATION(commands.Cog):
         embed.set_footer(text=FOOTER)
         await ctx.channel.send(embed=embed)
     @commands.command()
-    async def utils(self, ctx):
-        await ctx.channel.send("Coming soon...")
-
-    @commands.command()
     async def info(self, ctx):
         embed=discord.Embed(title="Info", description="Additonal details related to this bot.", color=INFO)
         embed.add_field(name="Author", value="<@456951144166457345>", inline=False)
-        embed.add_field(name="MainServer", value="<https://discord.gg/yfNYNkM>", inline=False)
+        embed.add_field(name="Server Invite", value="<https://discord.gg/yfNYNkM>", inline=False)
         embed.set_thumbnail(url=THUMBNAIL)
         embed.set_footer(text=FOOTER)
         await ctx.channel.send(embed=embed)

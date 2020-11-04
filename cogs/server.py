@@ -45,8 +45,8 @@ class server(commands.Cog):
 
             embed = discord.Embed(title="Server Versions",
                                   description="Here is some information you might need to know:", color=INFO)
-            embed.add_field(name=f"Java Server IP:", value="aetheria.world", inline=False)
-            embed.add_field(name=f"Bedrock Server IP:", value="aetheriabedrock.ddns.net", inline=False)
+            embed.add_field(name=f"Java Server: ", value="1.16.3", inline=False)
+            embed.add_field(name=f"Bedrock Server:", value="**NOT ONLINE**", inline=False)
             await ctx.channel.send(embed=embed)
 
             embed = discord.Embed(title="Server List",

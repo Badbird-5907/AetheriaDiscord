@@ -71,36 +71,6 @@ async def load(ctx, extension):
     embed.set_footer(text=FOOTER)
     await ctx.send(embed=embed)
 
-@load.error
-async def load_error(self, ctx, error):
-    error_embed = discord.Embed(title="Error!",
-                                colour=ERROR)
-    error_embed.set_author(name=f"{self.client.user.name}", icon_url=self.client.user.avatar_url)
-    error_embed.set_footer(text=FOOTER)
-    if isinstance(error, commands.CommandOnCooldown):
-        error_embed.add_field(name=f"Information",
-                              value=f"{ctx.author.mention}, you are on cooldown for this command!\nPlease try again later.")
-    if isinstance(error, commands.NotOwner):
-        error_embed.add_field(name=f"Information",
-                              value=f"{ctx.author.mention}, you are need to be the bot owner to use this command.")
-    if isinstance(error, commands.MissingRequiredArgument):
-        error_embed.add_field(name=f"Information", value=f"{ctx.author.mention}, you are missing a required argument.")
-    if isinstance(error, commands.MissingAnyRole):
-        error_embed.add_field(name=f"Information",
-                              value=f"{ctx.author.mention}, you are missing the required role(s) for this command.")
-    if isinstance(error, commands.MissingRole):
-        error_embed.add_field(name=f"Information",
-                              value=f"{ctx.author.mention}, you are missing the required role(s) for this command.")
-    if isinstance(error, commands.MissingPermissions):
-        error_embed.add_field(name=f"Information",
-                              value=f"{ctx.author.mention}, you are missing the required permission(s) for this command.")
-    if isinstance(error, commands.BadArgument):
-        error_embed.add_field(name=f"Information", value=f"{ctx.author.mention}, {error}")
-    if isinstance(error, commands.ExtensionNotFound):
-        error_embed.add_field(name=f"Information", value=f"{ctx.author.mention}, the extension you provided does not exist!")
-
-    await ctx.send(embed=error_embed)
-
 # COG UNLOADING
 @client.command()
 @commands.is_owner()
@@ -160,7 +130,7 @@ for filename in listdir("./cogs"):
 async def update_presence():
     await client.wait_until_ready()
 
-    statuses = ["-help", "The Aetheria Online Discord"]
+    statuses = ["-help", "The Aetheria Online Discord", "aetheria.world"]
 
     while not client.is_closed():
         status = random.choice(statuses)

@@ -3,7 +3,6 @@ import logging
 import coloredlogs
 import discord
 from discord.ext import commands
-from discord.ext.commands import has_permissions
 
 logger = logging.getLogger(__name__)
 fmt = ("%(asctime)s - %(message)s")
@@ -20,19 +19,24 @@ INFO = 0x13cd5d
 WARN = 0xFFB100
 ERROR = 0xFF2D00
 COG_LOG_LOCATION = "./logs/cog_information.log"
-
-class moderation(commands.Cog):
+class shutdown(commands.Cog):
     def __init__(self, client):
         self.client = client
-        # Events
+
+    # Events#
     @commands.Cog.listener()
     async def on_ready(self):
-        logger.info('Loaded moderation cog!')
+        logger.info('Loaded information cog!')
 
-    @commands.command(pass_context=True)
-    @commands.has_role(529067434003529728)
-    async def kick(ctx, user: discord.Member):
-        await user.kick("a", "a")
-
+    @commands.command()
+    async def shutdown(self, ctx):
+        if ctx.author.id == 456951144166457345:
+            embed = discord.Embed(title="Shutting down...", description="Goodbye!",color=ERROR)
+            await ctx.channel.send(embed=embed)
+            await client.close()
+            await exit(1)
+        else:
+            embed = discord.Embed(title="Error", description="You are not whitelisted for this command!", color=ERROR)
+            await ctx.channel.send(embed=embed)
 def setup(client):
-    client.add_cog(moderation(client))
+    client.add_cog(shutdown(client))
