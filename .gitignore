@@ -1,3 +1,7 @@
 venv/
 .idea/
 token.txt
+logs\
+logs\main.log
+logs/main.log
+*.log

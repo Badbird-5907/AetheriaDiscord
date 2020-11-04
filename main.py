@@ -16,7 +16,7 @@ token = data
 FOOTER =  "Aetheria Online Bot | Coded By <@456951144166457345>"
 # Colours for embeds
 THUMBNAIL = "https://cdn.discordapp.com/attachments/722091896931090575/759794463307726848/9c2a9f40100d08147c6b6fb8166a4799.png"
-INFO = 0x5d13cd
+INFO = 0x13cd5d
 WARN = 0x8959fb
 ERROR = 0x2a0e7b
 
@@ -59,11 +59,109 @@ async def on_disconnect():
 @client.command()
 async def ping(ctx):
     await ctx.send(f':ping_pong: Pong! {round(client.latency * 1000)}ms')
+    
+# COG LOADING
+@client.command()
+@commands.is_owner()
+async def load(ctx, extension):
+    client.load_extension(f"cogs.{extension}")
+    logger.warning(f"{ctx.message.author.name} ({ctx.message.author.id}) loaded {extension}!")
+    embed = discord.Embed(title=f"Successfully Loaded {extension}!", color=INFO)
+    embed.set_author(name=client.user.name, icon_url=client.user.avatar_url)
+    embed.set_footer(text=FOOTER)
+    await ctx.send(embed=embed)
+#TODO here
+
+@load.error
+async def load_error(self, ctx, error):
+    error_embed = discord.Embed(title="Error!",
+                                colour=ERROR)
+    error_embed.set_author(name=f"{self.client.user.name}", icon_url=self.client.user.avatar_url)
+    error_embed.set_footer(text=FOOTER)
+    if isinstance(error, commands.CommandOnCooldown):
+        error_embed.add_field(name=f"Information",
+                              value=f"{ctx.author.mention}, you are on cooldown for this command!\nPlease try again later.")
+    if isinstance(error, commands.NotOwner):
+        error_embed.add_field(name=f"Information",
+                              value=f"{ctx.author.mention}, you are need to be the bot owner to use this command.")
+    if isinstance(error, commands.MissingRequiredArgument):
+        error_embed.add_field(name=f"Information", value=f"{ctx.author.mention}, you are missing a required argument.")
+    if isinstance(error, commands.MissingAnyRole):
+        error_embed.add_field(name=f"Information",
+                              value=f"{ctx.author.mention}, you are missing the required role(s) for this command.")
+    if isinstance(error, commands.MissingRole):
+        error_embed.add_field(name=f"Information",
+                              value=f"{ctx.author.mention}, you are missing the required role(s) for this command.")
+    if isinstance(error, commands.MissingPermissions):
+        error_embed.add_field(name=f"Information",
+                              value=f"{ctx.author.mention}, you are missing the required permission(s) for this command.")
+    if isinstance(error, commands.BadArgument):
+        error_embed.add_field(name=f"Information", value=f"{ctx.author.mention}, {error}")
+    if isinstance(error, commands.ExtensionNotFound):
+        error_embed.add_field(name=f"Information", value=f"{ctx.author.mention}, the extension you provided does not exist!")
+
+    await ctx.send(embed=error_embed)
+
+# COG UNLOADING
+@client.command()
+@commands.is_owner()
+async def unload(ctx, extension):
+    client.unload_extension(f"cogs.{extension}")
+    logger.warning(f"{ctx.message.author.name} ({ctx.message.author.id}) unloaded {extension}!")
+    embed = discord.Embed(title=f"Successfully Unloaded {extension}!", color=INFO)
+    embed.set_author(name=client.user.name, icon_url=client.user.avatar_url)
+    embed.set_footer(text=FOOTER)
+    await ctx.send(embed=embed)
+
+
+
+@unload.error
+async def unload_error(self, ctx, error):
+    error_embed = discord.Embed(title="Error!",
+                                colour=ERROR)
+    error_embed.set_author(name=f"{self.client.user.name}", icon_url=self.client.user.avatar_url)
+    error_embed.set_footer(text=FOOTER)
+    if isinstance(error, commands.CommandOnCooldown):
+        error_embed.add_field(name=f"Information",
+                              value=f"{ctx.author.mention}, you are on cooldown for this command!\nPlease try again later.")
+    if isinstance(error, commands.NotOwner):
+        error_embed.add_field(name=f"Information",
+                              value=f"{ctx.author.mention}, you are need to be the bot owner to use this command.")
+    if isinstance(error, commands.MissingRequiredArgument):
+        error_embed.add_field(name=f"Information", value=f"{ctx.author.mention}, you are missing a required argument.")
+    if isinstance(error, commands.MissingAnyRole):
+        error_embed.add_field(name=f"Information",
+                              value=f"{ctx.author.mention}, you are missing the required role(s) for this command.")
+    if isinstance(error, commands.MissingRole):
+        error_embed.add_field(name=f"Information",
+                              value=f"{ctx.author.mention}, you are missing the required role(s) for this command.")
+    if isinstance(error, commands.MissingPermissions):
+        error_embed.add_field(name=f"Information",
+                              value=f"{ctx.author.mention}, you are missing the required permission(s) for this command.")
+    if isinstance(error, commands.BadArgument):
+        error_embed.add_field(name=f"Information", value=f"{ctx.author.mention}, {error}")
+    if isinstance(error, commands.ExtensionNotFound):
+        error_embed.add_field(name=f"Information", value=f"{ctx.author.mention}, the extension you provided does not exist!")
+
+    await ctx.send(embed=error_embed)
+
+for filename in listdir("./cogs"):
+    if filename != "information.py":
+        try:
+            if filename.endswith(".py"):
+                client.load_extension(f"cogs.{filename[:-3]}")
+                logger.info(f"Loading {filename[:-3]}")
+                with open(LOG_LOCATION, "a+") as main_log:
+                    main_log.write(f"[{datetime.datetime.now()}]: loaded {filename[:-3]}!\n")
+                    main_log.close()
+        except Exception as e:
+            logger.critical(e)
+
 
 async def update_presence():
     await client.wait_until_ready()
 
-    statuses = ["-help", "kek"]
+    statuses = ["-help", "The Aetheria Online Discord"]
 
     while not client.is_closed():
         status = random.choice(statuses)
