@@ -25,7 +25,7 @@ fmt = ("%(asctime)s - %(message)s")
 coloredlogs.install(fmt=fmt, logger=logger)
 
 
-client = commands.Bot(command_prefix="-")
+client = commands.Bot(command_prefix=commands.when_mentioned_or("-"))
 client.remove_command('help')
 config = ConfigParser()
 # Constants
