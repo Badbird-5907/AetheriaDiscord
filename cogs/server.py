@@ -1,4 +1,5 @@
 import logging
+import os
 
 import coloredlogs
 import discord
@@ -30,8 +31,8 @@ class server(commands.Cog):
         logger.info('Loaded information cog!')
     @commands.command()
     async def serverinfo(self, ctx):
-        #Badbird5907, Dwagon, Badbird ALT, tuck, pylons, noah
-        if ctx.author.id == 456951144166457345 or 287696585142304769 or 467016253417193472 or 251556377284050946 or 136587043164782593 or 330017448382169088:
+        #Badbird5907, Dwagon, tuck, pylons, noah
+        if ctx.author.id.__str__() == "456951144166457345" or "287696585142304769" or "251556377284050946" or "136587043164782593" or "330017448382169088":
             embed = discord.Embed(title="Welcome to the Aetheria Online Discord!!!",
                                   description="Here is some information you might need!", color=INFO)
             embed.set_thumbnail(url=THUMBNAIL)
@@ -63,6 +64,8 @@ class server(commands.Cog):
                             inline=False)
             embed.add_field(name=f"How to join the server:",
                             value="Check out <#719614335361744967> for instructions to join!", inline=False)
+            embed.add_field(name=f"How to go to hub:",
+                            value="You can either disconnect or reconnect or do `/server hub`, `/hub` is broken", inline=False)
             await ctx.channel.send(embed=embed)
 
             embed = discord.Embed(title="Server Invite", description="Make sure to invite your friends!", color=INFO)
@@ -75,10 +78,11 @@ class server(commands.Cog):
             embed.add_field(name=f"Bedrock", value="Bedrock is currently down until further notice.", inline=False)
             await ctx.channel.send(embed=embed)
 
-            embed = discord.Embed(title="Beta Server Commands",
-                                  description="These commands are for abilites in the beta server.", color=INFO)
+            embed = discord.Embed(title="Beta Server Info",
+                                  description="Here is some info on the beta server.", color=INFO)
             embed.add_field(name=f"Stats", value="`/stat`", inline=False)
             embed.add_field(name=f"Abilites", value="`/ability [<add/clear/remove>] [<ability>]`", inline=False)
+            embed.add_field(name=f"Owl's Reach", value="The coordinates for Owl's Reach is `2126 64 2108`", inline=False)
             await ctx.channel.send(embed=embed)
 
             embed = discord.Embed(title="Staff & Youtube Rank Applications",
@@ -124,9 +128,25 @@ class server(commands.Cog):
             await ctx.channel.send(embed=embed)
     @commands.command()
     async def totop(self, ctx):
-        embed = discord.Embed(title="Go To Top", description="Click [here](https://discord.com/channels/528980928094142484/545994362413252608/773616074268475403)",color=INFO)
-        await ctx.channel.send(embed=embed)
+        if ctx.author.id == 456951144166457345:
+            embed = discord.Embed(title="Go To Top", description="Click [here](https://discord.com/channels/528980928094142484/545994362413252608/773616074268475403)",color=INFO)
+            await ctx.channel.send(embed=embed)
+        else:
+            embed = discord.Embed(title="Error", description="You Must be Whitelisted to execute this.", color=ERROR)
+            await ctx.channel.send(embed=embed)
         #TODO to prevent spam.
+    @commands.command()
+    async def myid(self, ctx):
+        await ctx.channel.send("<@" + ctx.author.id.__str__() + "> Your ID is: " + "`" + ctx.author.id.__str__() + "`")
+    @commands.command()
+    async def clear_logs(self, ctx):
+        if(ctx.author.id == 456951144166457345):
+            os.system("cls")
+            embed = discord.Embed(title="Logs cleared!", description="Bot logs has been cleared!", color=INFO)
+            await ctx.channel.send(embed=embed)
+        else:
+            embed = discord.Embed(title="Error", description="You Must be Whitelisted to execute this.", color=ERROR)
+            ctx.channel.send(embed=embed)
 
 def setup(client):
     client.add_cog(server(client))

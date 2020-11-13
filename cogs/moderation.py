@@ -34,5 +34,6 @@ class moderation(commands.Cog):
     async def kick(ctx, user: discord.Member):
         await user.kick("a", "a")
 
+
 def setup(client):
     client.add_cog(moderation(client))

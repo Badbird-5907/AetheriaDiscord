@@ -82,50 +82,16 @@ async def unload(ctx, extension):
     embed.set_footer(text=FOOTER)
     await ctx.send(embed=embed)
 
-
-
-@unload.error
-async def unload_error(self, ctx, error):
-    error_embed = discord.Embed(title="Error!",
-                                colour=ERROR)
-    error_embed.set_author(name=f"{self.client.user.name}", icon_url=self.client.user.avatar_url)
-    error_embed.set_footer(text=FOOTER)
-    if isinstance(error, commands.CommandOnCooldown):
-        error_embed.add_field(name=f"Information",
-                              value=f"{ctx.author.mention}, you are on cooldown for this command!\nPlease try again later.")
-    if isinstance(error, commands.NotOwner):
-        error_embed.add_field(name=f"Information",
-                              value=f"{ctx.author.mention}, you are need to be the bot owner to use this command.")
-    if isinstance(error, commands.MissingRequiredArgument):
-        error_embed.add_field(name=f"Information", value=f"{ctx.author.mention}, you are missing a required argument.")
-    if isinstance(error, commands.MissingAnyRole):
-        error_embed.add_field(name=f"Information",
-                              value=f"{ctx.author.mention}, you are missing the required role(s) for this command.")
-    if isinstance(error, commands.MissingRole):
-        error_embed.add_field(name=f"Information",
-                              value=f"{ctx.author.mention}, you are missing the required role(s) for this command.")
-    if isinstance(error, commands.MissingPermissions):
-        error_embed.add_field(name=f"Information",
-                              value=f"{ctx.author.mention}, you are missing the required permission(s) for this command.")
-    if isinstance(error, commands.BadArgument):
-        error_embed.add_field(name=f"Information", value=f"{ctx.author.mention}, {error}")
-    if isinstance(error, commands.ExtensionNotFound):
-        error_embed.add_field(name=f"Information", value=f"{ctx.author.mention}, the extension you provided does not exist!")
-
-    await ctx.send(embed=error_embed)
-
 for filename in listdir("./cogs"):
-    if filename != "information.py":
-        try:
-            if filename.endswith(".py"):
-                client.load_extension(f"cogs.{filename[:-3]}")
-                logger.info(f"Loading {filename[:-3]}")
-                with open(LOG_LOCATION, "a+") as main_log:
-                    main_log.write(f"[{datetime.datetime.now()}]: loaded {filename[:-3]}!\n")
-                    main_log.close()
-        except Exception as e:
-            logger.critical(e)
-
+    try:
+        if filename.endswith(".py"):
+            client.load_extension(f"cogs.{filename[:-3]}")
+            logger.info(f"Loading {filename[:-3]}")
+            with open(LOG_LOCATION, "a+") as main_log:
+                main_log.write(f"[{datetime.datetime.now()}]: loaded {filename[:-3]}!\n")
+                main_log.close()
+    except Exception as e:
+        logger.critical(e)
 
 async def update_presence():
     await client.wait_until_ready()

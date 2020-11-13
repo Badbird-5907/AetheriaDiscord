@@ -29,7 +29,6 @@ class INFORMATION(commands.Cog):
     @commands.Cog.listener()
     async def on_ready(self):
         logger.info('Loaded information cog!')
-
     @commands.command()
     async def help(self,ctx):
         embed=discord.Embed(title="Help Menu", description="test", color=INFO)

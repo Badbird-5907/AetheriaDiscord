@@ -101,21 +101,28 @@ class Music(commands.Cog):
     @commands.command()
     async def rickroll(self, ctx):
         """Plays a file from the local filesystem"""
-        channel = ctx.author.voice.channel
-        await channel.connect()
-        source = discord.PCMVolumeTransformer(discord.FFmpegPCMAudio('kek.mp3'))
-        ctx.voice_client.play(source, after=lambda e: print('Player error: %s' % e) if e else None)
-        await ctx.send("Rickrolling >:D")
+        if ctx.author.id == 287696585142304769:
+            embed = discord.Embed(title="Error", description="You are not whitelisted for this command!", color=ERROR)
+            await ctx.channel.send(embed=embed)
+        else:
+            channel = ctx.author.voice.channel
+            await channel.connect()
+            source = discord.PCMVolumeTransformer(discord.FFmpegPCMAudio('kek.mp3'))
+            ctx.voice_client.play(source, after=lambda e: print('Player error: %s' % e) if e else None)
+            await ctx.send("Rickrolling >:D")
 
     @commands.command()
     async def yt(self, ctx, *, url):
         """Plays from a url (almost anything youtube_dl supports)"""
+        if ctx.author.id == 1:
+            embed = discord.Embed(title="Error", description="You are not whitelisted for this command!", color=ERROR)
+            await ctx.channel.send(embed=embed)
+        else:
+            async with ctx.typing():
+                player = await YTDLSource.from_url(url, loop=self.bot.loop)
+                ctx.voice_client.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
 
-        async with ctx.typing():
-            player = await YTDLSource.from_url(url, loop=self.bot.loop)
-            ctx.voice_client.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
-
-        await ctx.send('Now playing: {}'.format(player.title))
+            await ctx.send('Now playing: {}'.format(player.title))
 
     @commands.command()
     async def stream(self, ctx, *, url):
