@@ -46,8 +46,8 @@ class server(commands.Cog):
 
             embed = discord.Embed(title="Server Versions",
                                   description="Here is some information you might need to know:", color=INFO)
-            embed.add_field(name=f"Java Server: ", value="1.16.3", inline=False)
-            embed.add_field(name=f"Bedrock Server:", value="**NOT ONLINE**", inline=False)
+            embed.add_field(name=f"Java Server: ", value="1.16.4", inline=False)
+            embed.add_field(name=f"Bedrock Server:", value="aetheriabedrock.ddns.net", inline=False)
             await ctx.channel.send(embed=embed)
 
             embed = discord.Embed(title="Server List",
@@ -58,7 +58,7 @@ class server(commands.Cog):
                             inline=False)
             embed.add_field(name=f"Vanilla: ", value="A vanilla Minecraft world, that's it. Also there's no rules.",
                             inline=False)
-            embed.add_field(name=f"Beta: ", value="A server where you can test out our newest features!", inline=False)
+            embed.add_field(name=f"Beta: ", value="A server where you can test out our newest features! <:wl:716076087666278461> Currently Whitelisted due to bugs.", inline=False)
             embed.add_field(name=f"UHC: ",
                             value="Stands for Ultra Hardcore. If you don't know what it is, it's basically hunger games but in a blank world with a closing border.",
                             inline=False)
@@ -75,7 +75,6 @@ class server(commands.Cog):
             embed = discord.Embed(title="Servers that are currently down",
                                   description="These servers are currently offline.", color=WARN)
             embed.add_field(name=f"UHC", value="UHC is currently down until further notice.", inline=False)
-            embed.add_field(name=f"Bedrock", value="Bedrock is currently down until further notice.", inline=False)
             await ctx.channel.send(embed=embed)
 
             embed = discord.Embed(title="Beta Server Info",
@@ -103,7 +102,7 @@ class server(commands.Cog):
                             value="If you would like to report a player stealing or hacking, head over to <#737020656360882197> and open a Report A Player ticket!",
                             inline=False)
             embed.add_field(name=f"Bug Reports",
-                            value="If you experience a bug or something that isn't e=intended with any of our plugins, go to <#737020656360882197> and open a Bug Report ticket.",
+                            value="If you experience a bug or something that isn't intended with any of our plugins, go to <#737020656360882197> and open a Bug Report ticket.",
                             inline=False)
             embed.add_field(name=f"Punishment Appeals",
                             value="If you think that a staff member punished you unfairly, go to <#737020656360882197> and open an appeal ticket.",
